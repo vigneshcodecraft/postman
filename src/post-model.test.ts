@@ -1,4 +1,13 @@
-import { Post, Comment, PostsManager, CommentsManager } from "./post-model";
+import {
+  Post,
+  Comment,
+  Subscriber,
+  Publisher,
+  PostsManager,
+  CommentsManager,
+} from "./post-model";
+// import { PostsController } from "./post-controller";
+// import { PostsView } from "./post-view";
 
 const testPosts: Post[] = [
   {
@@ -82,5 +91,49 @@ describe("Model layer tests", () => {
     expect(postManager.posts).toBe(testPosts);
     postManager.currentPostIndex = 2;
     expect(postManager.currentPost()).toBe(testPosts[2]);
+  });
+});
+class DummyView implements Subscriber {
+  update(publisher: Publisher): void {}
+}
+describe("Pub Sub tests with post model", () => {
+  test("test that update of subscribe is called", () => {
+    const postManager = new PostsManager();
+    expect(PostsManager).toBeDefined();
+    expect(postManager.currentPostIndex).toBe(0);
+
+    postManager.posts = testPosts;
+
+    // Setup subscription
+    const dummyView = new DummyView();
+    postManager.subscribe(dummyView);
+    postManager.setPosts(testPosts);
+
+    const dummyView1 = new DummyView();
+    postManager.subscribe(dummyView1);
+    // whenever posts change, dummy view's update method
+    // should be called
+    const spy = vi.spyOn(dummyView, "update");
+    expect(spy.getMockName()).toEqual("update");
+
+    // const postView = new PostsView();
+
+    // postManager.subscribe(postView);
+    // postManager.setPosts(testPosts);
+
+    // setTimeout(
+    //   () =>
+    //     postManager.setPosts([
+    //       {
+    //         userId: 1,
+    //         id: 2,
+    //         title: "qui est esse",
+    //         body: "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
+    //       },
+    //     ]),
+    //   5000
+    // );
+    // const postController = new PostsController(postView, postManager);
+    // postController.fetchPosts();
   });
 });

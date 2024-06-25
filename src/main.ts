@@ -1,19 +1,12 @@
-import "./style.css";
-import "./posts.css";
+import { PostsView } from "./post-view";
+import { PostsManager } from "./post-model";
+import { PostsController } from "./post-controller";
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-<div class='container'>
-  <section>
-    <nav>
-      <button>previous</button>
-      <h2>Post title</h2>
-      <button>next</button>
-    </nav>
-    <p class="post-desc">Post description</p>
-  </section>
-  <section>
-    <button>View Comments</button>
-    <p class="comments">Comments of current post go here</p>
-  </section>
-</div>
-`;
+// controller is yer to be created;
+const postView = new PostsView();
+const postManager = new PostsManager();
+const postController = new PostsController(postView, postManager);
+postController.fetchPosts();
+postManager.subscribe(postView);
+// create the view, model, and controller and setup the relationship between them.
+// const postController = new PostsController(postView, postManager);
