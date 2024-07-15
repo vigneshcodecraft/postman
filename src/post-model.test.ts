@@ -1,11 +1,5 @@
-import {
-  Post,
-  Comment,
-  Subscriber,
-  Publisher,
-  PostsManager,
-  CommentsManager,
-} from "./post-model";
+import { Post, Comment, PostsManager, CommentsManager } from "./post-model";
+import { Subscriber, Publisher } from "./pub-sub";
 // import { PostsController } from "./post-controller";
 // import { PostsView } from "./post-view";
 

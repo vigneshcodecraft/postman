@@ -3,12 +3,83 @@
   margin-right: auto;
   max-width: 1024px;
   padding: 10px 20px;
+  box-sizing: border-box; /* Ensure padding and borders are included in element's total width */
+}
+
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  font-size: 1rem;
+  margin-bottom: 10px; /* Adjust as needed */
+}
+
+.search-container label {
+  font-size: 1rem;
+}
+
+.search-container .search {
+  padding: 5px 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
 }
 nav {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
 }
+
+.page-css {
+  text-align: center;
+  font-size: 1rem;
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 5px;
+}
+
+button {
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button.left-button,
+button.right-button {
+  flex-shrink: 0;
+  flex-basis: 85px; /* Example: Set a minimum width for buttons */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.view-comments {
+  background-color: #28a745;
+  margin-top: 20px;
+}
+
+.view-comments:hover {
+  background-color: #218838;
+}
+
 .post-desc {
   padding: 1rem 2rem;
   font-size: 1.5rem;
@@ -16,4 +87,24 @@ nav {
 
 .comments {
   margin-top: 30px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  overflow: auto; /* Add scrollbars if content exceeds container height */
+}
+
+.view-comments {
+  min-width: 150px; /* Adjust button width as needed */
+  padding: 10px 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  .search-container {
+    position: static;
+    align-self: flex-end;
+  }
 }

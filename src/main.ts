@@ -1,12 +1,13 @@
 import { PostsView } from "./post-view";
-import { PostsManager } from "./post-model";
+import { PostsManager, CommentsManager } from "./post-model";
 import { PostsController } from "./post-controller";
 
-// controller is yer to be created;
+// controller is yet to be created;
 const postView = new PostsView();
 const postManager = new PostsManager();
-const postController = new PostsController(postView, postManager);
-postController.fetchPosts();
+const commentManager = new CommentsManager();
+new PostsController(postView, postManager, commentManager);
 postManager.subscribe(postView);
+commentManager.subscribe(postView);
 // create the view, model, and controller and setup the relationship between them.
 // const postController = new PostsController(postView, postManager);
