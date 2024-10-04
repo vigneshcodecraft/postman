@@ -98,7 +98,7 @@ export class CommentsManager extends ActualPublisher implements CommentsModel {
     this.updateSubscribers();
   }
 
-  getCommentsForPost(postId: number) {
+  getCommentsForPost(postId: number): Comment[] | undefined {
     return this.commentsMap.get(postId);
   }
 

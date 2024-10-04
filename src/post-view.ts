@@ -2,6 +2,8 @@ import "./style.css";
 import "./posts.css";
 import { CommentsManager, PostsManager } from "./post-model";
 import { Publisher, Subscriber } from "./pub-sub";
+import { Comment } from "./post-model";
+import { createElement, ReactElement, render } from "./lib/dom-utility";
 
 export class PostsView implements Subscriber {
   postTitleElement: HTMLHeadingElement | null = null;
@@ -104,14 +106,15 @@ export class PostsView implements Subscriber {
         case "available":
           if (this.commentsElement && currentPostId !== null) {
             const comments = manager.getCommentsForPost(currentPostId);
-            this.commentsElement.innerHTML = comments
-              ? comments
-                  .map(
-                    (comment) =>
-                      `<p><b>${comment.email}</b></p><p> ${comment.body}</p><br>`
-                  )
-                  .join("")
-              : "";
+            // this.commentsElement.innerHTML = comments
+            //   ? comments
+            //       .map(
+            //         (comment) =>
+            //           `<p><b>${comment.email}</b></p><p> ${comment.body}</p><br>`
+            //       )
+            //       .join("")
+            this.buildCommentsList(comments);
+            // "";
           }
           break;
         case "pending":
@@ -144,6 +147,32 @@ export class PostsView implements Subscriber {
           }
           break;
       }
+    }
+  }
+  buildCommentsList(comments: Comment[] | undefined) {
+    if (comments) {
+      const commentListItems: ReactElement[] = [];
+      comments.forEach((comment: Comment) => {
+        // <li>
+        //   <h4>{comment.email}</h4>
+        //   <p>{comment.body}</p>
+        // </li>
+        const h4 = createElement(
+          "h4",
+          { style: "color: green; 'font-size:1.5rem" },
+          comment.email
+        );
+        const p = createElement("p", { style: "color:blue" }, comment.body);
+        commentListItems.push(
+          createElement("div", { style: "color: red" }, h4, p)
+        );
+      });
+
+      // we also now host this list of li items under our
+      // ul element
+      //     this.commentsElement?.replaceChildren(...commentListItems);
+      const containerDiv = createElement("div", {}, ...commentListItems);
+      render(containerDiv, this.commentsElement!);
     }
   }
 }
